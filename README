@@ -1,0 +1,3 @@
+DynamicItemStart example
+
+Shows how to create a top level menu in VS which has as its child a DynamicItemStart command which can expand at runtime to a varying number of menu items.  Uses MPF to handle the command as opposed to explicitly implementing IOleCommandTarget and having to deal with the PITA of marshalling the OLECMDTEXT structure.

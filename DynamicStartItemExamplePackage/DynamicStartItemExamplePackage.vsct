@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CommandTable xmlns="http://schemas.microsoft.com/VisualStudio/2005-10-18/CommandTable" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <Extern href="stdidcmd.h"/>
+  <Extern href="vsshlids.h"/>
+  <Extern href="msobtnid.h"/>
+
+  <Commands package="guidDynamicStartItemExamplePackagePkg">
+    <Groups>
+      <!-- The group within our top level menu item that will hold our dynamic item -->
+      <Group guid="guidDynamicStartItemExamplePackageCmdSet" id="grpidMyMenuGroup" priority="0x0000">
+        <Parent guid="guidDynamicStartItemExamplePackageCmdSet" id="mnuidMyMenu"/>
+      </Group>
+    </Groups>
+
+    <Menus>
+      <Menu guid="guidDynamicStartItemExamplePackageCmdSet" id="mnuidMyMenu" priority="0x0000" type="Menu">
+        <!-- Place our menu on the main menu in the same group as the Window and Help menu, since we are priority 0
+             we will end up before the first item in the group, which is the Window menu.-->
+        <Parent guid="guidSHLMainMenu" id="IDG_VS_MM_WINDOWHELP"/>
+
+        <!-- Make this default invisible so that it won't show up unless a handler can be found for it, the
+             only handler will come from our package so this means the menu won't be visible until our package
+             is loaded, which happens when you show our tool window.-->
+        <CommandFlag>DefaultInvisible</CommandFlag>
+        <CommandFlag>DynamicVisibility</CommandFlag>
+        <Strings>
+          <ButtonText>Dynamic Items</ButtonText>
+        </Strings>
+      </Menu>
+    </Menus>
+
+    <Buttons>
+      <Button guid="guidDynamicStartItemExamplePackageCmdSet" id="cmdidShowDynamicItemCountEntryWindow" priority="0x0100" type="Button">
+        <Parent guid="guidSHLMainMenu" id="IDG_VS_WNDO_OTRWNDWS1"/>
+        <Icon guid="guidImages" id="bmpPic2" />
+        <Strings>
+          <CommandName>cmdidShowDynamicItemCountEntryWindow</CommandName>
+          <ButtonText>Dynamic Item Count Entry Window</ButtonText>
+        </Strings>
+      </Button>
+
+      <!-- Our DynamicItemStart item which will expand to N items at runtime -->
+      <Button guid="guidDynamicStartItemExamplePackageCmdSet" id="cmdidMyDynamicStartItem" priority="0x0000">
+        <Parent guid="guidDynamicStartItemExamplePackageCmdSet" id="grpidMyMenuGroup"/>
+        <CommandFlag>DynamicItemStart</CommandFlag>
+        <Strings>
+          <ButtonText>Dynamic List Root</ButtonText>
+        </Strings>
+      </Button>
+    </Buttons>
+    
+    <Bitmaps>
+      <Bitmap guid="guidImages" href="Resources\Images_32bit.bmp" usedList="bmpPic1, bmpPic2, bmpPicSearch, bmpPicX, bmpPicArrows"/>
+    </Bitmaps> 
+  </Commands>
+
+  <Symbols>
+    <GuidSymbol name="guidDynamicStartItemExamplePackagePkg" value="{19d301f8-ea0a-459d-aa0e-1ddfadff33d6}" />
+    <GuidSymbol name="guidDynamicStartItemExamplePackageCmdSet" value="{75222791-3179-4902-8830-64211a64061d}">
+      <IDSymbol name="cmdidShowDynamicItemCountEntryWindow" value="0x0101" />
+      <IDSymbol name="grpidMyMenuGroup" value="0x0102"/>
+      <IDSymbol name="mnuidMyMenu" value="0x0103"/>
+      
+      <!-- Note, the next N ID's are 'claimed' by this command, i.e. you can't have any commands whose id == 0x0104 + N (where N == total number of items
+           in the dynamic command expansion).-->
+      <IDSymbol name="cmdidMyDynamicStartItem" value="0x0104" />
+    </GuidSymbol>
+    
+    <GuidSymbol name="guidImages" value="{6ed8d819-bc17-4e0c-a2c4-26563b27d942}" >
+      <IDSymbol name="bmpPic1" value="1" />
+      <IDSymbol name="bmpPic2" value="2" />
+      <IDSymbol name="bmpPicSearch" value="3" />
+      <IDSymbol name="bmpPicX" value="4" />
+      <IDSymbol name="bmpPicArrows" value="5" />
+    </GuidSymbol>
+  </Symbols>
+</CommandTable>
